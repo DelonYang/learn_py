@@ -14,4 +14,9 @@
 3. pyftpdlib
     一行命令开启ftp服务，在需要共享的目录使用该命令：`python - m pyftpdlib -p 21`
 
-4.
+4. logging常用配置
+  ```python
+  import logging
+  #设置format， 文件名，及日志级别
+  logging.basicConfig(filename='tt.log', level=logging.DEBUG, format='[%(asctime)s] %(filename)s : %(levelname)s  %(message)s')
+  ```
