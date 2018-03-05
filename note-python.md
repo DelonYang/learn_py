@@ -15,8 +15,55 @@
     一行命令开启ftp服务，在需要共享的目录使用该命令：`python - m pyftpdlib -p 21`
 
 4. logging常用配置
-  ```python
-  import logging
-  #设置format， 文件名，及日志级别
-  logging.basicConfig(filename='tt.log', level=logging.DEBUG, format='[%(asctime)s] %(filename)s : %(levelname)s  %(message)s')
-  ```
+    ```python
+    import logging
+    #设置format， 文件名，及日志级别
+    logging.basicConfig(filename='tt.log', level=logging.DEBUG, format='[%(asctime)s] %(filename)s : %(levelname)s  %(message)s')
+    ```
+5. 限制递归深度
+    ```python
+    def tt():
+      for _ in range(5):
+        if tt():
+          break
+    ```
+6. 使用tenacity进行函数retry
+    ```python
+    from tenacity import retry
+    from random import randint
+
+    @retry
+    def tt():
+        i = randint(1,10)
+        if i < 8:
+            print('error i={}'.format(i))
+            raise RuntimeError(i)
+        else:
+            print('ok={}'.format(i))
+    ```
+
+    `retry`的常用参数：
+    1. 尝试n次
+      ```python
+      from tenacity import *
+      @retry(stop=stop_after_attempt(n))
+      def xxx:
+      ...
+      ```
+    2. 一定时间后退出
+      ```python
+      @retry(stop=stop_after_delay(s))
+      ```
+    3. 二者都有
+      ```python
+      @retry(stop=(stop_after_attempt(n) | stop_after_delay(s)))
+      ```
+    4. 等待一定时间后重试
+      ```python
+      @retry(wait=wait_fixed(s))
+      ```
+    参考资料：
+    [pypi](https://pypi.python.org/pypi/tenacity)
+    [blog文档](https://kingname.info/2017/06/18/easy-retry/)
+
+7.
