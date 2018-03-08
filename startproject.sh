@@ -58,7 +58,6 @@ ipython
 ' >> $1/requirements.txt
 
 cd $1
-pyvenv ENV
-source ENV/bin/activate
-pip install -r requirements.txt
+pipenv --three
+pipenv install
 cd ..
