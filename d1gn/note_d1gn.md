@@ -8,7 +8,7 @@
 
     ```shell
     mkdir /data/svn
-    snvadmin create /data/svn/project
+    svnadmin create /data/svn/project
     ```
 3. 修改设置`svnserve.conf `, `passwd`, `authz`
 
@@ -17,7 +17,7 @@
     #匿名访问的权限，可以是read,write,none,默认为read 
     anon-access = none
     #认证用户的权限，可以是read,write,none,默认为write 
-    auth-access = write 
+    auth-access = write
     password-db = passwd
     authz-db = authz
 
@@ -28,7 +28,7 @@
     [groups]
     admin=user1, user2
 
-    [\]
+    [/]
     @admin=rw
     ```
 4. 设置5个字符以上才能commit
@@ -117,3 +117,65 @@
     vi /root/.profile
     将mesg n替换成tty -s && mesg n
     ```
+
+5. ubuntu命令行开热点
+    使用create_ap管理热点
+
+    1. 安装`create_ap`
+
+        ```shell
+        apt-get install build-essential linux-headers-generic dkms git
+        apt-get remove hostapd
+        apt-get install hostapd
+
+        git clone https://github.com/oblique/create_ap
+        cd create_ap
+        make install
+        ```
+    2. `create_ap`常用命令
+
+        ```shell
+        //1. 开启热点
+        create_ap 无线网卡 有线网卡 wifi名 密码 --daemon --dhcp-dns 114.114.114.114
+        
+        //2. 关闭
+        create_ap --stop 无线网卡
+
+        //option
+        --list-running          返回开启中的热点
+        --deamon                后台运行
+        ```
+6. 搭建samba文件共享服务
+
+    ubuntu安装比较简单，可以使用tasksel安装；centos安装：`yum install samba samba-client samba-swat`
+
+    **配置samba**
+
+    1. 在系统中添加相应共享用户
+
+        ```shell
+        groupadd pp -g 6000
+        useradd pp -u 6000 -g 6000 -s /sbin/nologin -d /dev/null
+        //该用户不能登录，只是作为samba服务用的
+        ```
+    2. 添加相应的samba账户
+
+        ```shell
+        pdbedit -a pp
+        ```
+    3. 配置smb.conf文件
+
+        ```shell
+        [public]
+        comment = public
+        path = /var/tmp
+        public = no
+        writable = yes
+        write list = +pp
+        ```
+    4. 重载smb
+
+        ```shell
+        service smb reload
+        ```
+    参考资料：[samba相关配置](http://www.cnblogs.com/mchina/archive/2012/12/18/2816717.html)
