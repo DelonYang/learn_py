@@ -66,11 +66,13 @@
 
     ```sql
     #1. 添加新字段
-    alter table hash_profit add column order_id  int(11) NOT NULL;
+    ALTER TABLE table_name ADD COLUMN order_id  INT(11) NOT NULL;
     #2. 添加索引
-    ALTER TABLE hash_profit ADD INDEX order_id(order_id);
+    ALTER TABLE table_name ADD INDEX order_id(order_id);
     #3. 添加外键约束
-    alter table hash_profit add constraint hash_profit_ibfk_3 foreign key(order_id) REFERENCES star_contract_order(id)
+    ALTER TABLE table_name ADD CONSTRAINT hash_profit_ibfk_3 foreign key(order_id) REFERENCES star_contract_order(id)
+    #4. 设置自增id从n开始，n为下次添加时的值
+    ALTER TABLE table_name AUTO_INCREMENT=n
 
     #1. 导入导出
     mysqldump -hhostname -uusername -ppassword databasename > backupfile.sql
@@ -179,3 +181,25 @@
         service smb reload
         ```
     参考资料：[samba相关配置](http://www.cnblogs.com/mchina/archive/2012/12/18/2816717.html)
+
+7. 获取mac地址的几种办法：
+
+    1. 使用`ifconfig`，然后从中匹配相应字符串
+    2. 使用`lshw -c network | grep serial`, 而后匹配
+    3. 用python获取：
+
+        ```python
+        from uuid import getnode
+        imac = getnode()
+        mac = ':'.join(f'{imac:012X}'[n: n+2] for n in range(0, 12, 2))
+        ```
+
+8. 修正Linux网卡名
+
+    ```shell
+    vi /etc/default/grub
+    改：GRUB_CMDLINE_LINUX="" 为 GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+    grub-mkconfig -o /boot/grub/grub.cfg
+    #重启生效
+    ```
+    **注意：修正后要改interface配置，网卡名对不上不能联网！！！**
