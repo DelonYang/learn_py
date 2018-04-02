@@ -17,7 +17,7 @@ subprocess用户执行shell命令，部分操作也可以在win上执行，替�
     subprocess.check_call(['ls','-l']) # 执行成功返回0，执行错误抛异常
     subprocess.getoutput('ls /bin/ls') # 接收字符串格式命令，只返回结果
     subprocess.check_output(['ls','-l']) #执行成功返回执行结果，不成功出错
-    subprocess.getstatsoutput('ls /bin/ls') #返回元祖(1,'/bin/ls')，第一个状态，第二个结果
+    subprocess.getstatusoutput('ls /bin/ls') #返回元祖(1,'/bin/ls')，第一个状态，第二个结果
     ```
     上面的方法，底层都是封装subprocess.Popen， 通过Popen对象来操作shell
 3. Popen
