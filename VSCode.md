@@ -11,3 +11,7 @@
     5. 检查：F8
     6. 预览markdown， Ctrl + Shift + v
     7. 隐藏/显示边栏： Ctrl + b
+    8. 跳转到定义F12，shift+F12 peek展示定义
+    9. cmd + shift + F 全文搜索
+    10. alt/cmd + click 在侧栏中打开
+    
