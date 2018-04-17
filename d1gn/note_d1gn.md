@@ -207,3 +207,17 @@
     #重启生效
     ```
     **注意：修正后要改interface配置，网卡名对不上不能联网！！！**
+
+# 杂项
+1. pip更换源：
+    1. 临时更换：`pip -i https://pypi.douban.com/simple install Flask -- trusted-host pypi.douban.com`
+    2. 更新配置文件：
+        1. win, 新建~/pip/pip.ini文件
+        2. linux, 新建~/.pip/pip.conf文件
+
+            同时添加以下内容：
+            ```
+            [global]
+            trusted-host=mirrors.aliyun.com
+            index-url=http://mirrors.aliyun.com/pypi/simple/
+            ```
