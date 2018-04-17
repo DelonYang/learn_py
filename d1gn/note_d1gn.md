@@ -81,6 +81,10 @@
     #1. 用户授权
     GRANT ALL PRIVILEGES ON *.* TO 'user'@'%' IDENTIFIED BY 'youpassword' WITH GRANT OPTION; 
     FLUSH PRIVILEGES; 
+
+    #1. 复制表
+    CREATE TABLE 新表 SELECT * FROM 旧表 会连同数据一起复制
+    CREATE TABLE 新表 SELECT * FROM 旧表 WHERE 1=2 只复制表结构
     ```
 
 ### 4. linux设置

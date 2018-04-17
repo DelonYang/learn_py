@@ -66,4 +66,15 @@
     [pypi](https://pypi.python.org/pypi/tenacity)
     [blog文档](https://kingname.info/2017/06/18/easy-retry/)
 
-7.
+7. defaultdict类型的使用， 主要处理缺省key默认值的情况
+
+    `defaultdict`使用一个函数去初始化，当使用`d[key]`形式取值的时候，即触发该函数，返回其值。
+
+    原理就是，继承dict， 重写其`__missing__`方法
+
+    ```python
+    from collections import defaultdict
+    d = defaultdict(lambda: 0)
+    d[key]
+    d.get() #不能触发lambda函数
+    ```
